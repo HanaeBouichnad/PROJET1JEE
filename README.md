@@ -81,11 +81,11 @@ model         -> objet Customer reçu de customer-service (bank-account-service)
 
 Tous les clients :
 
-![Liste des clients](screenShots/customers-all.png)
+![Liste des clients](screenShots/1-showCustomers.png)
 
 Un client par son id :
 
-![Client par id](screenShots/customer-by-id.png)
+![Client par id](screenShots/2-showCustomer.png)
 
 ---
 
@@ -93,11 +93,11 @@ Un client par son id :
 
 Tous les comptes (Swagger UI) :
 
-![Liste des comptes](screenShots/accounts-all.png)
+![Liste des comptes](screenShots/3-showBankAccounts.png)
 
 Un compte par son id :
 
-![Compte par id](screenShots/account-by-id.png)
+![Compte par id](screenShots/4-showBankAccount.png)
 
 ---
 
@@ -105,7 +105,7 @@ Un compte par son id :
 
 Bank-Account-Service appelle Customer-Service pour récupérer les informations du propriétaire du compte :
 
-![OpenFeign](screenShots/openfeign-account-customer.png)
+![OpenFeign](screenShots/8-openFeign.png)
 
 ---
 
@@ -113,7 +113,7 @@ Bank-Account-Service appelle Customer-Service pour récupérer les informations 
 
 Quand Customer-Service est arrêté, Bank-Account-Service ne plante pas : la méthode de secours (fallback) renvoie un client par défaut.
 
-![Circuit Breaker](screenShots/circuit-breaker-fallback.png)
+![Circuit Breaker](screenShots/9-resilience4j.png)
 
 ---
 
@@ -121,7 +121,7 @@ Quand Customer-Service est arrêté, Bank-Account-Service ne plante pas : la mé
 
 Les services inscrits dans l'annuaire :
 
-![Eureka](screenShots/eureka-dashboard.png)
+![Eureka](screenShots/7-eureka.png)
 
 ---
 
@@ -129,13 +129,13 @@ Les services inscrits dans l'annuaire :
 
 **Routage statique** (routes définies dans `application.yml`) :
 
-![Gateway clients](screenShots/gateway-static-customers.png)
+![Gateway clients](screenShots/6-gatewayCustomers.png)
 
-![Gateway comptes](screenShots/gateway-static-accounts.png)
+![Gateway comptes](screenShots/5-gatewayBankAccounts.png)
 
 **Routage dynamique** (routes générées à partir d'Eureka, avec le nom du service dans l'URL) :
 
-![Gateway dynamique vers le chatbot](screenShots/gateway-chatbot.png)
+![Gateway dynamique vers le chatbot](screenShots/17-GatewayChatbot.png)
 
 ---
 
@@ -145,41 +145,41 @@ Les micro-services exposent leurs fonctionnalités comme **outils MCP** (`@McpTo
 
 Liste des clients :
 
-![Clients](screenShots/chatbot-customers.png)
+![Clients](screenShots/12-chatbotCustomer.png)
 
 Un client :
 
-![Client 1](screenShots/chatbot-customer-1.png)
+![Client 1](screenShots/13-chatbotCustomerId.png)
 
 Tous les comptes :
 
-![Comptes](screenShots/chatbot-all-accounts.png)
+![Comptes](screenShots/14-chatbotBankAccounts.png)
 
 Détails d'un compte, avec son propriétaire :
 
-![Détails compte](screenShots/chatbot-account-details.png)
+![Détails compte](screenShots/15-chatbotBankAccountId.png)
 
 Comptes d'un client sous forme de tableau :
 
-![Tableau](screenShots/chatbot-accounts-table.png)
+![Tableau](screenShots/16-chatbotCustomerBankAccount.png)
 
 Mémoire de la conversation :
 
-![Mémoire](screenShots/chatbot-memory.png)
+![Mémoire](screenShots/11-chatbotMemoire.png)
 
 Question générale (sans outil) :
 
-![Question générale](screenShots/chatbot-general-question.png)
+![Question générale](screenShots/10-chatbot.png)
 
 ---
 
 ## 8. Bot Telegram
 
-![Telegram](screenShots/telegram-bot.png)
+![Telegram](screenShots/19-chatbotTelegram.png)
 
 ## 9. Bot Discord
 
-![Discord](screenShots/discord-bot.png)
+![Discord](screenShots/18-chatbotDiscord.png)
 
 ---
 
