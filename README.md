@@ -81,11 +81,11 @@ model         -> objet Customer reçu de customer-service (bank-account-service)
 
 Tous les clients :
 
-![Liste des clients](screenShots/1-showCustomers.png)
+<a href="screenShots/customerScreens/1-showCustomers.png"><img src="screenShots/customerScreens/1-showCustomers.png" alt="Liste des clients" width="600"></a>
 
 Un client par son id :
 
-![Client par id](screenShots/2-showCustomer.png)
+<a href="screenShots/customerScreens/2-showCustomer.png"><img src="screenShots/customerScreens/2-showCustomer.png" alt="Client par id" width="600"></a>
 
 ---
 
@@ -93,93 +93,87 @@ Un client par son id :
 
 Tous les comptes (Swagger UI) :
 
-![Liste des comptes](screenShots/3-showBankAccounts.png)
+<a href="screenShots/bankAccountScreens/1-showBankAccounts.png"><img src="screenShots/bankAccountScreens/1-showBankAccounts.png" alt="Liste des comptes" width="600"></a>
 
 Un compte par son id :
 
-![Compte par id](screenShots/4-showBankAccount.png)
+<a href="screenShots/bankAccountScreens/2-showBankAccount.png"><img src="screenShots/bankAccountScreens/2-showBankAccount.png" alt="Compte par id" width="600"></a>
 
----
-
-## 3. Communication entre services avec OpenFeign
+### Communication entre services avec OpenFeign
 
 Bank-Account-Service appelle Customer-Service pour récupérer les informations du propriétaire du compte :
 
-![OpenFeign](screenShots/8-openFeign.png)
+<a href="screenShots/bankAccountScreens/3-openFeign.png"><img src="screenShots/bankAccountScreens/3-openFeign.png" alt="OpenFeign" width="600"></a>
 
----
-
-## 4. Circuit Breaker (Resilience4J)
+### Circuit Breaker (Resilience4J)
 
 Quand Customer-Service est arrêté, Bank-Account-Service ne plante pas : la méthode de secours (fallback) renvoie un client par défaut.
 
-![Circuit Breaker](screenShots/9-resilience4j.png)
+<a href="screenShots/bankAccountScreens/4-resilience4j.png"><img src="screenShots/bankAccountScreens/4-resilience4j.png" alt="Circuit Breaker" width="600"></a>
 
 ---
 
-## 5. Discovery Service (Eureka)
+## 3. Discovery Service (Eureka)
 
 Les services inscrits dans l'annuaire :
 
-![Eureka](screenShots/7-eureka.png)
+<a href="screenShots/discoveryScreens/1-eureka.png"><img src="screenShots/discoveryScreens/1-eureka.png" alt="Eureka" width="600"></a>
 
 ---
 
-## 6. Gateway
+## 4. Gateway
 
 **Routage statique** (routes définies dans `application.yml`) :
 
-![Gateway clients](screenShots/6-gatewayCustomers.png)
+<a href="screenShots/gatewayScreens/1-gatewayCustomers.png"><img src="screenShots/gatewayScreens/1-gatewayCustomers.png" alt="Gateway clients" width="600"></a>
 
-![Gateway comptes](screenShots/5-gatewayBankAccounts.png)
+<a href="screenShots/gatewayScreens/2-gatewayBankAccounts.png"><img src="screenShots/gatewayScreens/2-gatewayBankAccounts.png" alt="Gateway comptes" width="600"></a>
 
 **Routage dynamique** (routes générées à partir d'Eureka, avec le nom du service dans l'URL) :
 
-![Gateway dynamique vers le chatbot](screenShots/17-GatewayChatbot.png)
+<a href="screenShots/gatewayScreens/3-gatewayChatbot.png"><img src="screenShots/gatewayScreens/3-gatewayChatbot.png" alt="Gateway dynamique vers le chatbot" width="600"></a>
 
 ---
 
-## 7. Chatbot IA (Spring AI + MCP)
+## 5. Chatbot IA (Spring AI + MCP)
 
 Les micro-services exposent leurs fonctionnalités comme **outils MCP** (`@McpTool`). Le chatbot les découvre et **GPT-4o choisit lui-même** l'outil à appeler selon la question.
 
-Liste des clients :
+Question générale (sans outil) :
 
-![Clients](screenShots/12-chatbotCustomer.png)
-
-Un client :
-
-![Client 1](screenShots/13-chatbotCustomerId.png)
-
-Tous les comptes :
-
-![Comptes](screenShots/14-chatbotBankAccounts.png)
-
-Détails d'un compte, avec son propriétaire :
-
-![Détails compte](screenShots/15-chatbotBankAccountId.png)
-
-Comptes d'un client sous forme de tableau :
-
-![Tableau](screenShots/16-chatbotCustomerBankAccount.png)
+<a href="screenShots/chatbotScreens/1-chatbot.png"><img src="screenShots/chatbotScreens/1-chatbot.png" alt="Question générale" width="600"></a>
 
 Mémoire de la conversation :
 
-![Mémoire](screenShots/11-chatbotMemoire.png)
+<a href="screenShots/chatbotScreens/2-chatbotMemoire.png"><img src="screenShots/chatbotScreens/2-chatbotMemoire.png" alt="Mémoire" width="600"></a>
 
-Question générale (sans outil) :
+Liste des clients :
 
-![Question générale](screenShots/10-chatbot.png)
+<a href="screenShots/chatbotScreens/3-chatbotCustomers.png"><img src="screenShots/chatbotScreens/3-chatbotCustomers.png" alt="Clients" width="600"></a>
 
----
+Un client :
 
-## 8. Bot Telegram
+<a href="screenShots/chatbotScreens/4-chatbotCustomerId.png"><img src="screenShots/chatbotScreens/4-chatbotCustomerId.png" alt="Client 1" width="600"></a>
 
-![Telegram](screenShots/19-chatbotTelegram.png)
+Tous les comptes :
 
-## 9. Bot Discord
+<a href="screenShots/chatbotScreens/5-chatbotBankAccounts.png"><img src="screenShots/chatbotScreens/5-chatbotBankAccounts.png" alt="Comptes" width="600"></a>
 
-![Discord](screenShots/18-chatbotDiscord.png)
+Détails d'un compte, avec son propriétaire :
+
+<a href="screenShots/chatbotScreens/6-chatbotBankAccountId.png"><img src="screenShots/chatbotScreens/6-chatbotBankAccountId.png" alt="Détails compte" width="600"></a>
+
+Comptes d'un client sous forme de tableau :
+
+<a href="screenShots/chatbotScreens/7-chatbotCustomerBankAccounts.png"><img src="screenShots/chatbotScreens/7-chatbotCustomerBankAccounts.png" alt="Tableau" width="600"></a>
+
+### Bot Telegram
+
+<a href="screenShots/chatbotScreens/8-chatbotTelegram.png"><img src="screenShots/chatbotScreens/8-chatbotTelegram.png" alt="Telegram" width="600"></a>
+
+### Bot Discord
+
+<a href="screenShots/chatbotScreens/9-chatbotDiscord.png"><img src="screenShots/chatbotScreens/9-chatbotDiscord.png" alt="Discord" width="600"></a>
 
 ---
 
