@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 @RestController
 public class ChatbotRestController {
@@ -19,5 +20,10 @@ public class ChatbotRestController {
     public String chat(@RequestParam String query) {
 
         return chatbotAIAgent.chat(new Prompt(query));
+    }
+
+    @GetMapping(value = "/chatStream",produces = MediaType.TEXT_PLAIN_VALUE)
+    public Flux<String> chatStream(@RequestParam String query) {
+        return chatbotAIAgent.chatStream(new Prompt(query));
     }
 }
