@@ -127,7 +127,7 @@ Les services inscrits dans l'annuaire :
 
 **Routage statique** (routes définies dans `application.yml`) :
 
-<a href="screenShots/gatewayScreens/1-gatewayCustomers.png"><img src="screenShots/gatewayScreens/1-gatewayCustomers.png" alt="Gateway clients" width="600"></a>
+<a href="screenShots/gatewayScreens/1-gatewayCustomers.png"><img src="screenShots/gatewayScreens/1-gatewayCustomers.png" alt="Gateway clients" width="350"></a>
 
 <a href="screenShots/gatewayScreens/2-gatewayBankAccounts.png"><img src="screenShots/gatewayScreens/2-gatewayBankAccounts.png" alt="Gateway comptes" width="600"></a>
 
