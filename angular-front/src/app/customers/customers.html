@@ -1,0 +1,50 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h4 class="mb-0 fw-semibold">Clients</h4>
+      <small class="text-muted">Liste des clients de la banque</small>
+    </div>
+    @if (customers$ | async; as state) {
+      @if (state.status === RequestStatus.SUCCESS) {
+        <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis px-3 py-2">
+          {{ state.customers?.length }} clients
+        </span>
+      }
+    }
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      @if (customers$ | async; as state) {
+        @if (state.status === RequestStatus.ERROR) {
+          <div class="alert alert-danger m-3">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ state.errorMessage }}
+          </div>
+        } @else if (state.status === RequestStatus.SUCCESS) {
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+              <tr>
+                <th style="width: 80px">ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (c of state.customers; track c.id) {
+                  <tr>
+                    <td><span class="client-id">{{ c.id }}</span></td>
+                    <td class="fw-semibold">{{ c.name }}</td>
+                    <td>
+                      <a href="mailto:{{ c.email }}" class="text-decoration-none text-secondary">{{ c.email }}</a>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

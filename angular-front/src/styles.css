@@ -2,3 +2,67 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.min.css";
 
+markdown table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  background-color: #fff;
+}
+
+markdown th,
+markdown td {
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+}
+
+markdown th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body {
+  background-color: #f5f7fb;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #1e293b !important;
+}
+.nav-link.active {
+  color: #fff !important;
+  border-bottom: 2px solid #60a5fa;
+}
+
+/* En-têtes des tableaux : gris clair au lieu de noir */
+.table thead th {
+  background-color: #0d6efd;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: none;
+  padding: 0.9rem 1rem;
+}
+/* Coins arrondis du tableau, comme la carte du chatbot */
+.card {
+  overflow: hidden;
+}
+.table td {
+  padding: 0.85rem 1rem;
+  border-color: #f1f5f9;
+}
+
+/* Numéro de client : pastille discrète */
+.client-id {
+  display: inline-block;
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-align: center;
+}
