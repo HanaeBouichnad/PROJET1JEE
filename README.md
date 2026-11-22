@@ -1,6 +1,6 @@
 # Projet JEE : Architecture micro-services avec un chatbot IA
 
-Application bancaire basée sur une **architecture micro-services** (Spring Boot et Spring Cloud), complétée par un **chatbot intelligent** (Spring AI et MCP) accessible en REST, sur Telegram et sur Discord.
+Application bancaire basée sur une **architecture micro-services** (Spring Boot et Spring Cloud), complétée par un **chatbot intelligent** (Spring AI et MCP) accessible en REST, sur Telegram, sur Discord et depuis un **front Angular**.
 
 Réalisé par **Hanae Bouichnad**, dans le cadre du module JEE.
 
@@ -9,7 +9,7 @@ Réalisé par **Hanae Bouichnad**, dans le cadre du module JEE.
 ## Architecture
 
 ```
-        Telegram / Discord / Postman / Navigateur
+      Angular (:4200) / Telegram / Discord / Postman
                           |
                           v
               +-----------------------+
@@ -23,7 +23,7 @@ Réalisé par **Hanae Bouichnad**, dans le cadre du module JEE.
    | :8081        |  | :8082            |  | :8083           |
    | clients      |  | comptes          |  | agent IA        |
    | MCP Server   |  | OpenFeign +      |  | (Spring AI,     |
-   |              |  | Circuit Breaker  |  |  OpenAI GPT-4o) |
+   |              |  | Circuit Breaker  |  |  Groq / Qwen)   |
    |              |  | MCP Server       |  | MCP Client      |
    +--------------+  +------------------+  +-----------------+
           ^                   ^                 |       |
@@ -44,7 +44,8 @@ Réalisé par **Hanae Bouichnad**, dans le cadre du module JEE.
 | **gateway-service** | 8888 | Point d'entrée unique, routage statique et dynamique |
 | **customer-service** | 8081 | Gestion des clients (CRUD), expose ses fonctionnalités en outils MCP |
 | **bank-account-service** | 8082 | Gestion des comptes (CRUD), appelle customer-service via OpenFeign, Circuit Breaker Resilience4J, outils MCP |
-| **chatbot-service** | 8083 | Agent IA (Spring AI + GPT-4o) avec mémoire, client MCP, bots Telegram et Discord |
+| **chatbot-service** | 8083 | Agent IA (Spring AI + modèle Qwen via Groq) avec mémoire, client MCP, streaming, bots Telegram et Discord |
+| **angular-front** | 4200 | Interface web : comptes, clients et assistant IA |
 
 ---
 
@@ -54,9 +55,10 @@ Réalisé par **Hanae Bouichnad**, dans le cadre du module JEE.
 - **Spring Web**, **Spring Data JPA**, **H2**, **Lombok**
 - **Eureka** (Discovery Service), **Spring Cloud Gateway**
 - **OpenFeign** (communication entre services), **Resilience4J** (Circuit Breaker)
-- **Spring AI** avec **OpenAI GPT-4o**, **MCP** (Model Context Protocol)
+- **Spring AI** avec **Groq** (modèle `qwen/qwen3.8-27b`, API compatible OpenAI), **MCP** (Model Context Protocol)
 - **Telegram Bots**, **Discord** (JDA)
 - **Springdoc OpenAPI** (Swagger UI)
+- **Angular**, **Bootstrap**, **Bootstrap Icons**, **ngx-markdown**
 
 ---
 
@@ -131,13 +133,22 @@ Les services inscrits dans l'annuaire :
 
 **Routage dynamique** (routes générées à partir d'Eureka, avec le nom du service dans l'URL) :
 
-<a href="screenShots/gatewayScreens/3-gatewayChatbot.png"><img src="screenShots/gatewayScreens/3-gatewayChatbot.png" alt="Gateway dynamique vers le chatbot" width="600"></a>
+<a href="screenShots/gatewayScreens/3-gatewayChatbot1.png"><img src="screenShots/gatewayScreens/3-gatewayChatbot1.png" alt="Gateway dynamique vers le chatbot 1" width="600"></a>
+
+<a href="screenShots/gatewayScreens/4-gatewayChatbot2.png"><img src="screenShots/gatewayScreens/4-gatewayChatbot2.png" alt="Gateway dynamique vers le chatbot 2" width="600"></a>
+
+La Gateway autorise aussi les appels du front Angular grâce à une configuration **CORS** globale (`globalcors` dans `application.yml`).
 
 ---
 
 ## 5. Chatbot IA (Spring AI + MCP)
 
-Les micro-services exposent leurs fonctionnalités comme **outils MCP** (`@McpTool`). Le chatbot les découvre et **GPT-4o choisit lui-même** l'outil à appeler selon la question.
+Les micro-services exposent leurs fonctionnalités comme **outils MCP** (`@McpTool`). Le chatbot les découvre et **le modèle choisit lui-même** l'outil à appeler selon la question.
+
+Le modèle est servi par **Groq**, qui expose une API compatible OpenAI : Spring AI utilise donc le même client OpenAI, avec une autre `base-url`. Deux endpoints sont disponibles :
+
+- `/chat` : la réponse complète en une seule fois ;
+- `/chatStream` : la réponse envoyée morceau par morceau (`Flux<String>`).
 
 Question générale (sans outil) :
 
@@ -177,6 +188,34 @@ Comptes d'un client sous forme de tableau :
 
 ---
 
+## 6. Front Angular
+
+Le front appelle les micro-services **à travers la Gateway** (`http://localhost:8888/NOM-DU-SERVICE/...`). Chaque page gère les états de la requête (succès / erreur), et un **intercepteur HTTP** affiche un indicateur de chargement pendant les appels.
+
+Liste des comptes bancaires :
+
+<a href="screenShots/angularScreens/1-accounts.png"><img src="screenShots/angularScreens/1-accounts.png" alt="Angular comptes" width="600"></a>
+
+Liste des clients :
+
+<a href="screenShots/angularScreens/2-customers.png"><img src="screenShots/angularScreens/2-customers.png" alt="Angular clients" width="600"></a>
+
+### Assistant IA
+
+La réponse du chatbot s'affiche **en streaming** (au fur et à mesure qu'elle est générée) et est mise en forme avec **ngx-markdown** (tableaux, listes, gras).
+
+<a href="screenShots/angularScreens/3-bot1.png"><img src="screenShots/angularScreens/3-bot1.png" alt="Assistant IA 1" width="600"></a>
+
+<a href="screenShots/angularScreens/4-bot2.png"><img src="screenShots/angularScreens/4-bot2.png" alt="Assistant IA 2" width="600"></a>
+
+Ajout d'un compte bancaire au client 1 depuis le chatbot (outil MCP), avant et après :
+
+<a href="screenShots/angularScreens/5-bot-avant-ajout-compteBancaire-client1.png"><img src="screenShots/angularScreens/5-bot-avant-ajout-compteBancaire-client1.png" alt="Avant ajout" width="600"></a>
+
+<a href="screenShots/angularScreens/6-bot-apres-ajout-compteBancaire-client1.png"><img src="screenShots/angularScreens/6-bot-apres-ajout-compteBancaire-client1.png" alt="Après ajout" width="600"></a>
+
+---
+
 ## Lancer le projet
 
 ### Variables d'environnement
@@ -185,7 +224,7 @@ Les clés ne sont pas dans le code. Avant de lancer `chatbot-service`, définir 
 
 | Variable | Description |
 |---|---|
-| `OPENAI_API_KEY` | clé de l'API OpenAI |
+| `GROQ_API_KEY` | clé de l'API Groq (https://console.groq.com) |
 | `TELEGRAM_BOT_TOKEN` | token du bot Telegram (BotFather) |
 | `DISCORD_TOKEN` | token du bot Discord |
 
@@ -195,14 +234,23 @@ Les clés ne sont pas dans le code. Avant de lancer `chatbot-service`, définir 
 2. `customer-service`
 3. `bank-account-service`
 4. `gateway-service`
-5. `chatbot-service` (en dernier : il se connecte aux serveurs MCP au démarrage)
+5. `chatbot-service` (après les services métier : il se connecte aux serveurs MCP au démarrage)
+6. `angular-front` :
+
+```
+cd angular-front
+npm install --legacy-peer-deps
+ng serve
+```
 
 ### URLs utiles
 
 | URL | Description |
 |---|---|
+| http://localhost:4200 | Front Angular |
 | http://localhost:8761 | Tableau de bord Eureka |
 | http://localhost:8888/customers | Clients via la Gateway |
 | http://localhost:8888/bankAccounts | Comptes via la Gateway |
-| http://localhost:8083/chat?query=... | Chatbot |
+| http://localhost:8083/chat?query=... | Chatbot (réponse complète) |
+| http://localhost:8083/chatStream?query=... | Chatbot (streaming) |
 | http://localhost:8083/swagger-ui.html | Swagger du chatbot |
