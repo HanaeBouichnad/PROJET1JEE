@@ -83,11 +83,11 @@ model         -> objet Customer reçu de customer-service (bank-account-service)
 
 Tous les clients :
 
-<a href="screenShots/customerScreens/1-showCustomers.png"><img src="screenShots/customerScreens/1-showCustomers.png" alt="Liste des clients" width="600"></a>
+<a href="screenShots/customerScreens/1-showCustomers.png"><img src="screenShots/customerScreens/1-showCustomers.png" alt="Liste des clients" width="350"></a>
 
 Un client par son id :
 
-<a href="screenShots/customerScreens/2-showCustomer.png"><img src="screenShots/customerScreens/2-showCustomer.png" alt="Client par id" width="600"></a>
+<a href="screenShots/customerScreens/2-showCustomer.png"><img src="screenShots/customerScreens/2-showCustomer.png" alt="Client par id" width="350"></a>
 
 ---
 
